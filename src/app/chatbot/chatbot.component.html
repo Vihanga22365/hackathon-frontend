@@ -5,7 +5,7 @@
     *ngIf="isOpen"
     [class.minimized]="isMinimized"
     class="chat-window bg-white rounded-2xl shadow-2xl mb-4 overflow-hidden transition-all duration-300 ease-in-out"
-    [ngClass]="isMinimized ? 'h-16' : 'h-[600px]'"
+    [ngClass]="isMinimized ? 'h-16' : 'h-[800px]'"
   >
     <!-- Chat Header -->
     <div
@@ -23,7 +23,7 @@
           ></span>
         </div>
         <div>
-          <h3 class="font-semibold text-sm">Support Assistant</h3>
+          <h3 class="font-semibold text-sm">TripMate</h3>
           <p class="text-xs text-blue-100">Online</p>
         </div>
       </div>
@@ -85,7 +85,7 @@
     <!-- Chat Messages -->
     <div
       *ngIf="!isMinimized"
-      class="chat-messages h-[460px] overflow-y-auto p-4 bg-gray-50"
+      class="chat-messages h-[660px] overflow-y-auto p-4 bg-gray-50"
     >
       <div *ngFor="let message of messages" class="mb-4 animate-fadeIn">
         <!-- Bot Message -->
@@ -99,8 +99,8 @@
             <span class="text-white text-sm">🤖</span>
           </div>
           <div class="flex flex-col max-w-[75%]">
-            <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2 shadow-sm">
-              <p class="text-gray-800 text-sm">{{ message.text }}</p>
+            <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-2 shadow-sm markdown-content">
+              <div class="text-gray-800 text-sm" [innerHTML]="message.htmlContent || message.text"></div>
             </div>
             <span class="text-xs text-gray-400 mt-1 ml-2">{{
               message.timestamp | date : "shortTime"
@@ -128,6 +128,26 @@
           >
             <span class="text-white text-sm">👤</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div
+        *ngIf="isTyping"
+        class="mb-4 animate-fadeIn flex items-start space-x-2"
+      >
+        <div
+          class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0"
+        >
+          <span class="text-white text-sm">🤖</span>
+        </div>
+        <div class="flex flex-col">
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+          <span class="text-xs text-gray-400 mt-1 ml-2">Agent thinking...</span>
         </div>
       </div>
     </div>
@@ -162,6 +182,10 @@
           [(ngModel)]="messageText"
           (keypress)="handleKeyPress($event)"
           placeholder="Type a message..."
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
           class="flex-1 px-4 py-2 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
         />
         <button

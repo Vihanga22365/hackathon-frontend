@@ -1,5 +1,5 @@
 .chat-window {
-  width: 450px;
+  width: 650px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &.minimized {
@@ -61,9 +61,156 @@
   }
 }
 
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background-color: white;
+  border-radius: 16px;
+  border-top-left-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  width: fit-content;
+
+  .typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #94a3b8;
+    animation: typingAnimation 1.4s infinite ease-in-out;
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes typingAnimation {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+.markdown-content {
+  ::ng-deep {
+    p {
+      margin: 0.5em 0;
+      line-height: 1.6;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    ul, ol {
+      margin: 0.5em 0;
+      padding-left: 1.5em;
+      line-height: 1.6;
+    }
+
+    li {
+      margin: 0.25em 0;
+    }
+
+    strong {
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    code {
+      background-color: #f3f4f6;
+      padding: 0.125rem 0.25rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+      font-size: 0.875em;
+    }
+
+    pre {
+      background-color: #f3f4f6;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin: 0.5em 0;
+
+      code {
+        background-color: transparent;
+        padding: 0;
+      }
+    }
+
+    blockquote {
+      border-left: 3px solid #6366f1;
+      padding-left: 1rem;
+      margin: 0.5em 0;
+      color: #4b5563;
+      font-style: italic;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0.75em 0 0.5em;
+      font-weight: 600;
+      line-height: 1.4;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    h1 {
+      font-size: 1.25em;
+    }
+
+    h2 {
+      font-size: 1.15em;
+    }
+
+    h3 {
+      font-size: 1.1em;
+    }
+
+    a {
+      color: #6366f1;
+      text-decoration: underline;
+
+      &:hover {
+        color: #4f46e5;
+      }
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 1em 0;
+    }
+  }
+}
+
 @media (max-width: 640px) {
   .chat-window {
     width: calc(100vw - 32px);
-    max-width: 450px;
+    max-width: 650px;
   }
 }
